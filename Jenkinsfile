@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/YOUR_REPO_URL.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/hpatanwadia/assn2.git']]])
             }
         }
         
@@ -12,7 +12,7 @@ pipeline {
             environment {
                 NODE_HOME = tool 'NodeJS'
                 PHP_HOME = tool 'PHP'
-                FLASK_APP = 'app.py'
+                FLASK_APP = 'index.html'
             }
             steps {
                 script {
@@ -20,9 +20,9 @@ pipeline {
                         sh 'npm install'
                         sh 'npm run build'
                         sh 'npm run start'
-                    } else if (fileExists('index.php')) {
+                    } else if (fileExists('index.html')) {
                         sh 'php index.php'
-                    } else if (fileExists('app.py')) {
+                    } else if (fileExists('index.html')) {
                         sh 'pip install -r requirements.txt'
                         sh 'flask run'
                     } else {
